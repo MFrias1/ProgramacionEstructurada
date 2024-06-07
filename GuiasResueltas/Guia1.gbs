@@ -1,1 +1,494 @@
+ESTRUCTURA DE UN RECORRIDO:
+  Inicio del recorrido
+  while(quedan elementos por procesar){ --> obligatorio
+  	Procesar elementos
+  	Pasar al siguiente elemento --> obligatorio
+  }
+  Finalizar el recorrido
 
+//////////////////////////////////////////////////////////////////////////////////
+TIPOS DE RECORRIDOS:
+  - De procesamiento:
+    En cada celda donde posiciono el cabezal voy haciendo algo (modifico el estado del tablero), por ejemplo: poniendo bolitas, sacando bolitas.
+    
+    Inicio del recorrido
+    while(corta el recorrido llegues al final del tablero){ --> obligatorio
+    	Procesar elementos
+    	Pasar al siguiente elemento --> obligatorio
+    }
+    Finalizar el recorrido
+
+  - De búsqueda:
+    El recorrido termina cuando encuentra lo que debe buscar.
+
+    Inicio del recorrido
+    while(corta el recorrido cuando llegues al final del tablero o 
+    corta el recorrido cuando encuentres los elementos a buscar){ --> obligatorio
+    	Pasar al siguiente elemento --> obligatorio
+    }
+    No hay caso de borde
+
+  - De acumulación:
+    que pueden ser: Contador o Acumulador.
+
+  - De procesamiento y búsqueda:
+  
+    Inicio del recorrido
+    while(corta el recorrido cuando llegues al final del tablero o 
+    corta el recorrido cuando encuentres los elementos a buscar){ --> obligatorio
+    	Procesar elementos --> realizo las acciones que modifiquen el estado del tablero
+    	Pasar al siguiente elemento --> obligatorio
+    }
+    No hay caso de borde (corto el procesamiento cuando encuentro lo que buscaba)
+
+/////////////////////////////////////////////////////////////////////////////////////
+## GUÍA 8 - Resoluciones:
+
+**Ejercicio1**
+
+```
+procedure IrAlBorde_(direccion){
+	while(puedeMover(direccion)){
+		Mover(direccion)
+	}
+}
+```
+
+**Ejercicio2**
+
+```
+procedure SacarTodasLasDeColor_(color){
+	while(hayBolitas(color)){
+		Sacar(color)
+	}
+}
+```
+
+## **RECORRIDOS POR CELDAS DE LA FILA O COLUMNA:**
+
+**Ejercicio3**
+
+```
+procedure VaciarFilaDe_(color){
+	SacarTodasLasDeColor_(color)
+	while(puedeMover(dirección)){
+		SacarTodasLasDeColor_(color)
+		Mover(dirección)
+	}
+	SacarTodasLasDeColor_(color)
+}
+```
+
+**Ejercicio4**
+
+```
+procedure VaciarFilaDe_HaciaEl_(color, dirección){
+	SacarTodasLasDeColor_(color)
+	while(puedeMover(dirección)){
+		SacarTodasLasDeColor_(color)
+		Mover(dirección)
+	}
+	SacarTodasLasDeColor_(color)
+}
+```
+
+## **RECORRIDOS POR CELDAS DEL TABLERO:**
+
+**Ejercicio5**
+
+```
+procedure VaciarTableroDe_(color){
+	while(puedeMoverALasiguienteFila(Norte)){
+		VaciarFilaDe_HaciaEl_(color, Este)
+		IrAlBorde_(Oeste)
+		Mover(Norte)
+	}
+	VaciarFilaDe_HaciaEl_(color, Este)
+}
+```
+
+```
+function puedeMoverALasiguienteFila(dirección){
+return(
+
+    puedeMover(dirección)
+
+    )
+}
+```
+
+**Ejercicio6 -** *Las subtareas más útiles de la historia*
+*BIBLIOTECA*
+Escribir los procedimientos necesarios para generalizar la noción de recorrido por celdas
+de un tablero, para que las direcciones de recorrido no estén fijas. En particular, definir (como siempre, comenzando por los contratos):
+
+```
+a. IrAPrimeraCeldaEnUnRecorridoAl_Y_(dirPrincipal, dirSecundaria)
+b. haySiguienteCeldaEnUnRecorridoAl_Y_(dirPrincipal, dirSecundaria)
+c. IrASiguienteCeldaEnUnRecorridoAl_Y_(dirPrincipal, dirSecundaria)
+```
+
+Que hacen precisamente lo que sugiere su nombre, permitiendo utilizarlas en un recorrido por celdas. Puede probarlas intentando colocar una bolita en cada celda del tablero, o volviendo a implementar el ejercicio anterior, ahora de forma parametrizada. Al escribir las precondiciones, tener en cuenta que las direcciones no pueden ser cualesquiera, sino que deben estar relacionadas. ¿Cuál es esa relación? ¿Cómo expresarla?
+
+**Ejercicio7**
+
+a) PintarTableroDe_(color) que coloca exactamente una bolita del color dado en cada celda del tablero.
+
+```
+procedure PintarTableroDe_(color){
+	while (haySiguienteCeldaEnUnRecorridoAl_Y_(dirPrincipal, dirSecundaria)){
+		Poner(color)
+		IrASiguienteCeldaEnUnRecorridoAl_Y_(dirPrincipal, dirSecundaria)
+	}
+}
+```
+
+b)  UnaDeCadaEnTodoElTablero() que coloca una bolita de cada color en cada celda del tablero.
+
+```
+procedure UnaDeCadaEnTodoElTablero(){
+	IrAPrimeraCeldaEnUnRecorridoAl_Y_(dirPrincipal, dirSecundaria)
+	while(haySiguienteCeldaEnUnRecorridoAl_Y_(dirPrincipal, dirSecundaria)){
+	    PonerUnaDecada(colorAPoner)
+	    IrASiguienteCeldaEnUnRecorridoAl_Y_(dirPrincipal, dirSecundaria)
+	}
+	PonerUnaDecada(colorAPoner)
+}
+```
+
+c) RellenarCon_EnAusenciaDe_EnElTablero(colorAPoner, colorAMirar)
+que coloca una bolita de color colorAPoner en cada celda del tablero en la que no haya al menos una bolita de color colorAMirar.
+
+```
+procedure RellenarCon_EnAusenciaDe_EnElTablero(colorAPoner, colorAMirar){
+	IrAPrimeraCeldaEnUnRecorridoAl_Y_(dirPrincipal, dirSecundaria)
+	while(not hayBolitas_Al_(colorAMirar,direccion) && haySiguienteCeldaEnUnRecorridoAl_Y_(dirPrincipal, dirSecundaria)){
+		    Poner(colorAPoner)
+		    IrASiguienteCeldaEnUnRecorridoAl_Y_(dirPrincipal, dirSecundaria)
+	}
+	Poner_DeColor_(cantidadAPoner, colorAPoner)
+}
+```
+
+d) CompletarHasta_De_EnElTablero(cantidad, color) que deja en cada celda del tablero exactamente tantas bolitas del color dado como la cantidad indicada por el parámetro cantidad. Note que puede que ya existan bolitas del color dado en algunas de las celdas, en cuyo caso. Realice el procedimiento sin hacer uso del comando Sacar ni ninguno de los procedimientos que implican Sacar.
+
+```
+procedure CompletarHasta_De_EnElTablero(cantidad, color){
+	IrAPrimeraCeldaEnUnRecorridoAl_Y_(dirPrincipal, dirSecundaria)
+	while(hayBolitas_Al_(color,direccion)){//corregir mi condicion
+	    Poner_DeColor_(cantidadAPoner, colorAPoner)
+	    IrASiguienteCeldaEnUnRecorridoAl_Y_(dirPrincipal, dirSecundaria)
+	}
+Poner_DeColor_(cantidadAPoner, colorAPoner)
+}
+```
+
+## **RECORRIDOS DE BÚSQUEDA:**
+
+**Ejercicio8**
+
+Buscando la bolita roja en la fila/columna 
+
+Escribir un procedimiento IrHastaLaBolitaRojaHacia_(direcciónABuscar) que deja el cabezal posicionado en la celda más próxima a la actual en la dirección dada que posea una bolita de color Rojo. Cuidado, sí hay una bolita de color Rojo en la celda actual, el cabezal debe moverse a la más cercana, no permanecer en la actual. ¿Cuál es la precondición de este procedimiento?
+
+```
+procedure IrHastaLaBolitaRojaHacia_(direcciónABuscar){
+    IrAPrimeraCeldaEnUnRecorridoAl_Y_(dirPrincipal, dirSecundaria)
+    while(haySiguienteCeldaEnUnRecorridoAl_Y_(dirPrincipal, dirSecundaria) && not hayBolitas(Roja)){
+    	    IrASiguienteCeldaEnUnRecorridoAl_Y_(dirPrincipal, dirSecundaria)
+    	}
+}
+```
+
+**Ejercicio9**
+
+Buscando la celda vacía
+Escribir un procedimiento IrALaSiguienteVacíaHacia_(dirección) que **posiciona el cabezal en la próxima celda vacía** en la fila o columna, desde la celda en donde se encuentra el cabezal (sin incluirla) hacia el borde en la dirección dada, **dejando el cabezal en el borde en caso de no haber ninguna celda vacía** en dicha dirección.
+
+```
+procedure IrALaSiguienteVacíaHacia_(direcciónABuscar){
+    while(esCeldaVacia() && haySiguienteCeldaEnUnRecorridoAl_Y_(dirPrincipal, dirSecundaria)){
+        MoverALaCeldaVacia(direcciónABuscar)
+    }
+    IrASiguienteCeldaEnUnRecorridoAl_Y_(dirPrincipal, dirSecundaria)
+}
+function esCeldaVacia(){
+    /*
+    PROP: Describe si la celda actual está vacía.
+    PARAM: no
+    PRECOND: no
+    TIPO: Booleano
+    OBS: NA
+    */
+    return(not(hayBolitas(Azul)||hayBolitas(Negro)||hayBolitas(Rojo)||hayBolitas(Verde)))
+}
+
+OPCIÓN 2:
+procedure IrALaSiguienteVacíaHacia_(direcciónABuscar){
+    while(haySiguienteCeldaEnUnRecorridoAl_Y_(direcciónABuscar, dirSecundaria)){
+        IrASiguienteCeldaEnUnRecorridoAl_Y_(direcciónABuscar, dirSecundaria)
+    }
+}
+```
+
+**Ejercicio10**
+
+Buscando en todo el tablero
+Definir un procedimiento IrHastaLaQueTengaUnaDeCada() que posiciona el cabezal en cualquier
+celda que contenga una bolita de cada color, y que hace BOOM si no hubiera en el tablero alguna celda que cumpla con dicha característica.
+
+```
+procedure IrHastaLaQueTengaUnaDeCada(){
+
+	while(not tieneUnaDeCada() && haySiguienteCeldaEnUnRecorridoAl_Y_(dirPrincipal, dirSecundaria)){
+		IrASiguienteCeldaEnUnRecorridoAl_Y_(direcciónABuscar, dirSecundaria)
+	}
+}
+```
+
+**Ejercicio12**
+
+Comiendo la pieza
+
+Se pide que escriba el procedimiento ComerPiezaNegraConTorreHacia_(direcciónAComer) que
+asumiendo que se está sobre una torre blanca, come la pieza negra más próxima a la celda actual
+hacia la dirección dada, dejando la torre en dicha celda.
+
+```
+procedure ComerPiezaNegraConTorreHacia_(direcciónAComer){
+	while(not hayUnaPiezaNegra() && haySiguienteCeldaEnUnRecorridoAl_Y_(dirPrincipal, dirSecundaria)){
+		MoverTorreBlancaHacia_(direcciónAMover)
+	}
+	ComerPiezaNegra()
+}
+```
+
+**Ejercicio14**
+
+El caminante: https://www.youtube.com/watch?v=6kZWYJ2X8Dc
+///////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+[P9. Variables y funciones con procesamiento]
+
+[Recorrido sobre enumerativos.mkv](https://drive.google.com/file/d/1GN3KpO-_G5lI3foCDVPE7AaSepiCjexo/view?usp=drive_link)
+
+[Recorrido de acumulación.mkv](https://drive.google.com/file/d/1UQrUArbiGkeI7e_zeBdVFiVhi9rYswAa/view?usp=drive_link)
+
+[Recorrido de búsqueda.mkv](https://drive.google.com/file/d/1cBN4VxjYODWDqqB8rYNUn3-qbqMFlNbX/view?usp=drive_link)
+
+[Alternativa condicional en expresiones.mkv](https://drive.google.com/file/d/1HP0chcRbwINjuesWbv6-4rdHYNweKxx7/view?usp=drive_link)
+
+# **FUNCIONES CON PROCESAMIENTO:**
+
+Las funciones con procesamiento sirven para devolver VALORES que dependan de otras celdas que no sea la celda actual, o expresar valores que dependen de procesar información dispersa en el tablero.
+
+Este procesamiento se consigue agregando un grupo de comandos a las funciones previo al return.
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Dentro de la función -fuera del return- incluiremos comandos para realizar acciones que analizaran el tablero a partir de la posición actual del cabezal. Sin embargo, estas acciones no afectaran el estado del tablero (ni del cabezal).
+
+Con la ayuda de los comandos, podremos devolver expresiones mas complejas gracias a que analizamos aquello especifico que necesitemos en una posición determinada en el tablero. 
+
+Gobstones mueve “un fantasma del cabezal”, chequea lo que tiene que chequear y devuelve el resultado. El cabezal original se queda quieto.
+
+PERO, si muere el “fantasma”, el cabezal también morirá. Entonces, Gobstones hará “BOOM”.
+
+*¿Qué quiere decir?*
+
+Si realizo una acción y no considere las precondiciones que se requieren para realizar esa acción a partir de la ubicación actual del cabezal real, el “cabezal fantasma” no podrá realizar la acción y por ende se lleva a cabezal real con el. Mueren los dos, muere el programa.
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+# **VARIABLES:**
+
+- Funcionan como expresiones que me permiten recordar información.
+- En Gobstones las variables serán locales, por lo que los procedimientos se pueden comunicar mediante parámetros y argumentos.
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+## GUÍA 9 - Resoluciones:
+
+**Ejercicio 1**
+
+Mirando la celda vecina
+Escribir la función tieneBolitas_Al_, que, **suponiendo que existe una celda lindante** en la dirección dada, **indica si la misma tiene o no bolitas** del color indicado. Sí no hay una celda lindante, hace BOOM.
+
+```
+function tieneBolitas_Al_(color, direccion){
+	Mover(direccion) *--> a la celda lindante en la dirección dada*
+	return(hayBolitas(color)) *--> tiene o no bolitas del color 
+	indicado en la celda lindante*
+}
+
+*Este programa me permite que el tablero analice el escenario y me 
+indique su estado a partir de la ubicacion actual del cabezal. 
+**Sin mover el cabezal, ni realizar modificaciones en el tablero.**
+En este caso, le pregunto al tablero si en la direccion dada se encuentran 
+bolitas del color indicado. **Sin importar si hace BOOM.***
+```
+
+**Ejercicio 2**
+
+Mirando la celda vecina, incluso si no hay vecina 
+
+**BIBLIOTECA** :Escribir la función hayBolitas_Al_, que **indica si hay una celda lindante** en la dirección indicada y la misma **tiene bolitas** del color dado. Sí **no hay celda lindante describe Falso**.
+
+```
+function hayBolitas_Al_(color, direccion){
+	if(puedeMover(direccion)){
+		Mover(direccion)
+	}
+	return(**puedeMover(direccion)** && hayBolitas(color))
+}
+
+//Debido a que la consigna dice " **indica si hay una celda lindante** ", 
+en el return de la funcion debo poner una expreción que me **INDIQUE** lo 
+que me solicita la consigna, en este caso si **puede mover. Asi, la función deberá
+evaluar si hay una celda lindante primero.
+
+PERO colocar un condicional dentro de una funcion es una mala práctica. Ya que
+una debe estar dentro de un procedimiento para poder estar dentro de la funcion.**
+Sin embargo, en este caso, un condicional tampoco no es necesario.....
+
+¿Cómo lo resuelvo entonces?
+**CREO una función** que mueva el "cabezal fantasma" y analice si hay bolitas.
+Pero NO utilizo un condicional.
+
+function tieneBolitas_hacia_(color,direccion){
+	/*PRECONDICION:........*/
+	while(puedeMover(direccion) && not hayBolitas(color)){
+		Mover(direccion)
+	}
+	return(hayBolitas(color))
+}
+
+**BIBLIOTECA** :
+**function hayBolitas_Al_(color, direccion){
+	/*PRECONDICIÓN: Ninguna*/
+	return(puedeMover(direccion) && tieneBolitas_hacia_(color, direccion))
+}**
+
+*1ro analizo si puede mover y si puede mover, el AND leera la siguiente 
+expreción y ejecutará el contenido de la segunda expreción. si no puede mover,
+da falso y directamente el AND no analizará la 2da condición.*
+```
+
+**Ejercicio 3**
+
+Mirando en la celda al borde 
+
+Escribir la función hayBolitas_EnElBorde_, que **indica si** en la celda que se encuentra en el borde
+dado por la dirección, **hay bolitas del color indicado**.
+
+```
+function hayBolitas_EnElBorde_(color, direccion){
+	IrAlBorde_(direccion)
+	return(**hayBolitas(color)**)
+}
+```
+
+**Ejercicio 4**
+
+Mirando en la fila o columna
+Escribir la función hayBolitas_Hacia_ que **indica si** en alguna de las celdas hacia la dirección dada
+(**sin incluir la celda actual**), **hay bolitas del color dado**.
+
+```
+function hayBolitas_Hacia_(color, direccion){
+	/*PRECONDICION: Ninguna*/
+	return(puedeMover() && tieneBolitas_hacia_(color,direccion))
+	//*1RO: pregunto si puedo mover el "cabezal fantasma".
+	//2DO: si da true, hace un recorrido.*
+}
+*//una especie de recorrido de busqueda con sus condiciones de corte.
+//TIEMPO 1:19:00 2022-09-16* 
+```
+
+**Ejercicio 5**
+
+Y volviendo a mirar en la fila o columna
+Escribir la función hayCeldaVacíaHacia_, que indica si en alguna de las celdas hacia la dirección
+dada (sin incluir la celda actual) hay una que esté vacía.
+
+```
+function hayCeldaVacíaHacia_(direccion){
+	Mover(direccion)
+	while(puedeMover(direccion) && not esCeldaVacia()){
+		Mover(direccion)
+	}
+	return(esCeldaVacia(direccion))
+}
+```
+
+**Ejercicio 6**
+
+Escribir la función hayAlgunaBolita_, que indica si en alguna de las celdas del tablero existe una
+bolita del color dado.
+
+```
+a. IrAPrimeraCeldaEnUnRecorridoAl_Y_(dirPrincipal, dirSecundaria)
+b. haySiguienteCeldaEnUnRecorridoAl_Y_(dirPrincipal, dirSecundaria)
+c. IrASiguienteCeldaEnUnRecorridoAl_Y_(dirPrincipal, dirSecundaria)
+
+function hayAlgunaBolita_(color){
+	IrAPrimeraCeldaEnUnRecorridoAl_Y_(dirPrincipal, dirSecundaria)
+	while(haySiguienteCeldaEnUnRecorridoAl_Y_(dirPrincipal, dirSecundaria) && not hayBolitas(color)){
+		IrASiguienteCeldaEnUnRecorridoAl_Y_(dirPrincipal, dirSecundaria)
+	}
+	return(hayBolitas(color))
+}
+```
+
+**Ejercicio 7** 
+
+Y volvemos a mirar el tablero
+Escribir la función hayAlgunaCeldaVacía, que indica si alguna de las celdas del tablero está vacía.
+
+```
+function hayAlgunaCeldaVacía_(direccion){
+	IrAPrimeraCeldaEnUnRecorridoAl_Y_(dirPrincipal, dirSecundaria)
+	while(haySiguienteCeldaEnUnRecorridoAl_Y_(dirPrincipal, dirSecundaria) && not esCeldaVacia()){
+		IrASiguienteCeldaEnUnRecorridoAl_Y_(dirPrincipal, dirSecundaria)
+	}
+	return(esCeldaVacia())
+}
+```
+
+## VARIABLES:
+
+**Ejercicio 8**
+
+Copiamos una celda
+Escribir el procedimiento CopiarCeldaAl_, que copia los contenidos de la celda actual a la celda
+lindante en la dirección dada. Note que se deben eliminar los contenidos originales que hubieran en la celda de destino.
+
+```
+procedure CopiarCeldaAl_(direccion){
+
+//guardo la cantidad de bolitas que hayan en la celda actual de todos los colores
+//posibles (considereando que no hay expresion para guardar colores)
+	bolitasDeColorAzul= nroBolitas(Azul)
+	bolitasDeColorVerde= nroBolitas(Verde)
+	bolitasDeColorRojo= nroBolitas(Rojo)
+	bolitasDeColorNegro= nroBolitas(Negro)
+	
+	//Me muevo a la celda direccion
+	Mover(direccion)
+	
+	//pego la cantidad guardadas en la celda en la eh indico el color a poner en la
+	//direccion en la que me movi (recordando que las variables son expreciones)
+	Poner_DeColor_(bolitasDeColorAzul, Azul)
+	Poner_DeColor_(bolitasDeColorVerde, Verde)
+	Poner_DeColor_(bolitasDeColorRojo, Rojo)
+	Poner_DeColor_(bolitasDeColorNegro, Negro)
+	
+}
+
+//El ejercicio busca que guarde el color y la cantidad de bolitas de ese color
+en una variable, de talforma que luega me mueva y "pegue" ece contenido copiado
+en la celda a la que me movi. 
+incluso si no hubieran bolitas de x color, se guardaria cero en la variable.
+```
