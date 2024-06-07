@@ -43,10 +43,6 @@ TIPOS DE RECORRIDOS:
     No hay caso de borde (corto el procesamiento cuando encuentro lo que buscaba)
 
 /////////////////////////////////////////////////////////////////////////////////////
-RESUMEN:
-
-![Resumen recorridos.jpg](https://prod-files-secure.s3.us-west-2.amazonaws.com/2c0a0667-0a8e-4b11-a4b5-318360fecb5e/ce00a251-0886-43ea-816d-7e70e6afd6d2/7cf0ab0f-3e4e-4861-ac64-4088365cb77f.png)
-
 ## GUÍA 8 - Resoluciones:
 
 **Ejercicio1**
@@ -259,10 +255,6 @@ Se pide que escriba el procedimiento ComerPiezaNegraConTorreHacia_(direcciónACo
 asumiendo que se está sobre una torre blanca, come la pieza negra más próxima a la celda actual
 hacia la dirección dada, dejando la torre en dicha celda.
 
-![guia8.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/2c0a0667-0a8e-4b11-a4b5-318360fecb5e/efbd48fe-e66c-45af-b7df-5ceb44b2a9c7/guia8.png)
-
-![guia8-1.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/2c0a0667-0a8e-4b11-a4b5-318360fecb5e/22253193-c93b-41bb-aafb-ffe706998c23/guia8-1.png)
-
 ```
 procedure ComerPiezaNegraConTorreHacia_(direcciónAComer){
 	while(not hayUnaPiezaNegra() && haySiguienteCeldaEnUnRecorridoAl_Y_(dirPrincipal, dirSecundaria)){
@@ -279,7 +271,7 @@ El caminante: https://www.youtube.com/watch?v=6kZWYJ2X8Dc
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-[P9. Variables y funciones con procesamiento](https://prod-files-secure.s3.us-west-2.amazonaws.com/2c0a0667-0a8e-4b11-a4b5-318360fecb5e/02e3122b-fe5a-43c1-974a-12a3dd3b2364/P9._Variables_y_funciones_con_procesamiento.pdf)
+[P9. Variables y funciones con procesamiento]
 
 [Recorrido sobre enumerativos.mkv](https://drive.google.com/file/d/1GN3KpO-_G5lI3foCDVPE7AaSepiCjexo/view?usp=drive_link)
 
