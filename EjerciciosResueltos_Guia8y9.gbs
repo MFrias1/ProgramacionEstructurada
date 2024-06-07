@@ -6,6 +6,7 @@ ESTRUCTURA DE UN RECORRIDO:
   }
   Finalizar el recorrido
 
+//////////////////////////////////////////////////////////////////////////////////
 TIPOS DE RECORRIDOS:
   - De procesamiento:
     En cada celda donde posiciono el cabezal voy haciendo algo (modifico el estado del tablero), por ejemplo: poniendo bolitas, sacando bolitas.
@@ -21,8 +22,6 @@ TIPOS DE RECORRIDOS:
     El recorrido termina cuando encuentra lo que debe buscar.
 
     Inicio del recorrido
-
-//////////////////////////////////////////////////////////////////////////////////
     while(corta el recorrido cuando llegues al final del tablero o 
     corta el recorrido cuando encuentres los elementos a buscar){ --> obligatorio
     	Pasar al siguiente elemento --> obligatorio
